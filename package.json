@@ -9,6 +9,7 @@
   },
   "build": {
     "appId": "cdc.starterkit.electron",
+    "publish": "onTag",
     "productName": "CDC Electron Starterkit",
     "mac": {
       "category": "public.app-category.productivity"
