@@ -1,0 +1,20 @@
+{
+  "name": "cdc-electron-starterkit",
+  "version": "1.0.0",
+  "description": "Electron app starter kit",
+  "author": {
+    "name": "thinkdj",
+    "email": "think.dj@gmail.com",
+    "url": "https://think.dj/"
+  },
+  "main": "src/main.js",
+  "scripts": {
+    "start": "electron ."
+  },
+  "license": "CC0-1.0",
+  "dependencies": {
+  },
+  "devDependencies": {
+    "electron": "^25.1.1"
+  }
+}

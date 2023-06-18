@@ -1,0 +1,26 @@
+
+# folders
+/node_modules
+/thinkdj
+
+# builds
+/out
+/dist
+/builds
+
+# editors etc
+/.git
+/.idea
+/.vagrant
+
+# misc
+Homestead.json
+Homestead.yaml
+npm-debug.log
+
+# files
+*.dmg
+*.exe
+*.zip
+*.deb
+*.tar.gz
