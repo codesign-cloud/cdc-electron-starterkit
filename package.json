@@ -33,8 +33,8 @@
   "scripts": {
     "start": "electron .",
     "postinstall": "electron-builder install-app-deps",
-    "build-all": "electron-builder --mac --windows --linux",
-    "release-all": "electron-builder --mac --windows --linux --publish always"
+    "build": "electron-builder --mac --windows --linux",
+    "release": "electron-builder --mac --windows --linux --publish always"
   },
   "license": "CC0-1.0",
   "dependencies": {},
