@@ -9,7 +9,14 @@
   },
   "build": {
     "appId": "cdc.starterkit.electron",
-    "publish": "always",
+    "publish":  [
+      {
+        "provider": "github",
+        "owner": "codesign-cloud",
+        "repo": "cdc-electron-starterkit",
+        "releaseType": "draft"
+      }
+    ],
     "productName": "CDC Electron Starterkit",
     "mac": {
       "category": "public.app-category.productivity"
