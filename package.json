@@ -9,7 +9,7 @@
   },
   "build": {
     "appId": "cdc.starterkit.electron",
-    "publish":  [
+    "publish": [
       {
         "provider": "github",
         "owner": "codesign-cloud",
@@ -25,21 +25,53 @@
       "icon": false
     },
     "linux": {
-      "target": ["AppImage"],
+      "target": [
+        "AppImage"
+      ],
       "category": "Office"
     }
   },
   "main": "src/main.js",
   "scripts": {
-    "start": "electron .",
+    "start": "npm run build:renderer:dev && npm-run-all -p watch:renderer start:electron:delayed",
+    "start:electron": "cross-env NODE_ENV=development electron .",
+    "start:electron:delayed": "cross-env NODE_ENV=development wait-on dist/renderer.bundle.js && electron .",
+    "watch:renderer": "webpack --mode=development --watch",
+    "build:renderer": "webpack --mode=production",
+    "build:renderer:dev": "webpack --mode=development",
+    "dev": "npm start",
     "postinstall": "electron-builder install-app-deps",
-    "build": "electron-builder --mac --windows --linux",
-    "release": "electron-builder --mac --windows --linux --publish always"
+    "build": "npm run build:renderer && electron-builder --mac --windows --linux",
+    "release": "npm run build:renderer && electron-builder --mac --windows --linux --publish always",
+    "test": "jest",
+    "test:watch": "jest --watch",
+    "lint": "echo 'Linting not configured yet'",
+    "clean": "rimraf dist"
   },
   "license": "CC0-1.0",
-  "dependencies": {},
   "devDependencies": {
-    "electron": "^25.1.1",
-    "electron-builder": "^24.4.0"
+    "@babel/core": "^7.28.0",
+    "@babel/preset-env": "^7.28.0",
+    "@babel/preset-react": "^7.27.1",
+    "babel-jest": "^30.0.4",
+    "babel-loader": "^10.0.0",
+    "chokidar": "^4.0.3",
+    "cross-env": "^7.0.3",
+    "css-loader": "^7.1.2",
+    "electron": "^37.2.0",
+    "electron-builder": "^26.0.12",
+    "electron-reloader": "^1.2.3",
+    "jest": "^30.0.4",
+    "npm-run-all": "^4.1.5",
+    "playwright-electron": "^0.5.0",
+    "rimraf": "^6.0.1",
+    "style-loader": "^4.0.0",
+    "wait-on": "^8.0.3",
+    "webpack": "^5.99.9",
+    "webpack-cli": "^6.0.1"
+  },
+  "dependencies": {
+    "react": "^19.1.0",
+    "react-dom": "^19.1.0"
   }
 }
