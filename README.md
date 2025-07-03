@@ -12,6 +12,9 @@ A modern, secure, and feature-rich Electron + React starter template with best p
 - **Cross-Platform**: Windows, macOS, and Linux support
 - **Modern UI**: Beautiful gradient design with responsive layout
 
+##### Screenshot
+![Screenshot](assets/screenshot.png "Screenshot")
+
 ## 📦 What's Included
 
 - ✅ Secure IPC communication between main and renderer processes

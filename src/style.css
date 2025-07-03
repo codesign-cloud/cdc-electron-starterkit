@@ -1,210 +1,70 @@
-* {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
-}
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
-body {
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
+/* Custom components */
+@layer components {
+  .card {
+    @apply bg-white rounded-xl shadow-sm border border-gray-200 p-6 transition-all duration-200 hover:shadow-md hover:border-gray-300;
+  }
+  
+  .btn-primary {
+    @apply bg-black text-white px-4 py-2 rounded-md font-medium transition-all duration-200 hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2;
+  }
+  
+  .btn-secondary {
+    @apply bg-gray-100 text-gray-900 px-4 py-2 rounded-md font-medium transition-all duration-200 hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2;
+  }
+  
+  .badge {
+    @apply inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium;
+  }
+  
+  .badge-success {
+    @apply bg-green-100 text-green-800;
+  }
+  
+  .badge-error {
+    @apply bg-red-100 text-red-800;
+  }
+  
+  .gradient-bg {
     background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-    color: #333;
-    min-height: 100vh;
-    line-height: 1.6;
+  }
 }
 
-.app {
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-    padding: 20px;
-    max-width: 1200px;
-    margin: 0 auto;
+/* Custom animations */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
-.app-header {
-    text-align: center;
-    margin-bottom: 40px;
-    color: white;
+.animate-fade-in-up {
+  animation: fadeInUp 0.6s ease-out;
 }
 
-.app-header h1 {
-    font-size: 3rem;
-    font-weight: 700;
-    margin-bottom: 10px;
-    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
-}
-
-.subtitle {
-    font-size: 1.2rem;
-    opacity: 0.9;
-    font-weight: 300;
-}
-
-.app-main {
-    flex: 1;
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
-    gap: 30px;
-    margin-bottom: 40px;
-}
-
-.info-card,
-.features-card {
-    background: rgba(255, 255, 255, 0.95);
-    backdrop-filter: blur(10px);
-    border-radius: 16px;
-    padding: 30px;
-    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
-
-.info-card:hover,
-.features-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15);
-}
-
-.info-card h2,
-.features-card h2 {
-    font-size: 1.5rem;
-    margin-bottom: 20px;
-    color: #2d3748;
-    border-bottom: 2px solid #667eea;
-    padding-bottom: 10px;
-}
-
-.info-card p {
-    font-size: 1.1rem;
-    margin-bottom: 15px;
-}
-
-.version {
-    display: inline-block;
-    background: #667eea;
-    color: white;
-    padding: 4px 12px;
-    border-radius: 20px;
-    font-weight: 600;
-    margin-left: 10px;
-    font-size: 0.9rem;
-}
-
-.version.error {
-    background: #e53e3e;
-}
-
-.error-message {
-    background: #fed7d7;
-    color: #c53030;
-    padding: 15px;
-    border-radius: 8px;
-    border-left: 4px solid #e53e3e;
-    margin-top: 15px;
-}
-
-.features-card ul {
-    list-style: none;
-    padding: 0;
-}
-
-.features-card li {
-    padding: 12px 0;
-    font-size: 1.1rem;
-    border-bottom: 1px solid #e2e8f0;
-    transition: color 0.2s ease;
-}
-
-.features-card li:last-child {
-    border-bottom: none;
-}
-
-.features-card li:hover {
-    color: #667eea;
-}
-
-.app-footer {
-    text-align: center;
-    color: white;
-    font-size: 1rem;
-    opacity: 0.8;
-    margin-top: auto;
-}
-
-.error-boundary {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    min-height: 100vh;
-    background: #f7fafc;
-    padding: 40px;
-    text-align: center;
-}
-
-.error-boundary h1 {
-    color: #e53e3e;
-    font-size: 2rem;
-    margin-bottom: 20px;
-}
-
-.error-boundary p {
-    color: #4a5568;
-    font-size: 1.1rem;
-    margin-bottom: 30px;
-    max-width: 500px;
-}
-
-.error-boundary button {
-    background: #667eea;
-    color: white;
-    border: none;
-    padding: 12px 24px;
-    border-radius: 8px;
-    font-size: 1rem;
-    cursor: pointer;
-    transition: background 0.2s ease;
-}
-
-.error-boundary button:hover {
-    background: #5a67d8;
-}
-
-/* Responsive design */
-@media (max-width: 768px) {
-    .app {
-        padding: 15px;
-    }
-    
-    .app-header h1 {
-        font-size: 2rem;
-    }
-    
-    .app-main {
-        grid-template-columns: 1fr;
-        gap: 20px;
-    }
-    
-    .info-card,
-    .features-card {
-        padding: 20px;
-    }
-}
-
-/* Scrollbar styling */
+/* Scrollbar styling for webkit browsers */
 ::-webkit-scrollbar {
-    width: 8px;
+  width: 6px;
 }
 
 ::-webkit-scrollbar-track {
-    background: rgba(255, 255, 255, 0.1);
+  background: #f1f1f1;
 }
 
 ::-webkit-scrollbar-thumb {
-    background: rgba(255, 255, 255, 0.3);
-    border-radius: 4px;
+  background: #c1c1c1;
+  border-radius: 3px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-    background: rgba(255, 255, 255, 0.5);
+  background: #a8a8a8;
 }
