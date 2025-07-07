@@ -2,7 +2,6 @@
 
 const { execSync } = require('child_process');
 const fs = require('fs');
-const path = require('path');
 
 // Read current version from package.json
 const packageJson = JSON.parse(fs.readFileSync('package.json', 'utf8'));
@@ -29,13 +28,18 @@ try {
   
   console.log(`New version: ${newVersion}`);
   
-  // Push changes and tags
-  console.log('Pushing changes and tags...');
+  // Push changes (GitHub Actions will detect version change and create release automatically)
+  console.log('Pushing changes...');
   execSync('git push', { stdio: 'inherit' });
-  execSync('git push --tags', { stdio: 'inherit' });
   
-  console.log(`✅ Release v${newVersion} created successfully!`);
-  console.log('GitHub Actions will now build and create the release automatically.');
+  console.log(`✅ Version bumped to v${newVersion}!`);
+  console.log('🚀 GitHub Actions will automatically:');
+  console.log('   - Detect the version change');
+  console.log('   - Build the Windows executable');
+  console.log('   - Create a git tag');
+  console.log('   - Create a GitHub release');
+  console.log('');
+  console.log('Check the Actions tab in your repository to monitor progress.');
   
 } catch (error) {
   console.error('❌ Error creating release:', error.message);

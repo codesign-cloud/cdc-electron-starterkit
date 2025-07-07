@@ -1,13 +1,14 @@
-# Release Process
+# Automatic Release Process
 
-This project is configured with automated GitHub Actions to build and release Windows executables.
+This project now features **fully automated releases** that trigger when the version in `package.json` changes!
 
 ## How it works
 
-1. **On every push** to `main`/`master`: The workflow builds the app to test that everything compiles correctly
-2. **On tag push** (version tags like `v1.0.0`): The workflow builds the app and creates a GitHub release with Windows executables
+1. **On every push**: GitHub Actions checks if the version in `package.json` has changed
+2. **If version changed**: Automatically builds the app, creates a git tag, and publishes a GitHub release
+3. **If version unchanged**: Just builds the app to test that everything compiles correctly
 
-## Creating a Release
+## Creating a Release (Super Easy!)
 
 ### Method 1: Using the release scripts (Recommended)
 
@@ -24,85 +25,87 @@ npm run release:major
 
 These scripts will:
 - Bump the version in `package.json`
-- Create a git tag
-- Push changes and tags to GitHub
-- Trigger the GitHub Actions workflow automatically
+- Push the changes to GitHub
+- **GitHub Actions automatically detects the version change and creates the release!**
 
-### Method 2: Manual process
+### Method 2: Manual version bump
 
 ```bash
 # Bump version manually
 npm version patch  # or minor, major
 
-# Push changes and tags
+# Push changes
 git push
-git push --tags
+
+# GitHub Actions will automatically handle the rest!
 ```
 
-## What gets built
+### Method 3: Edit package.json directly
 
-The GitHub Actions workflow will create:
-- **NSIS Installer** (`.exe`) - Standard Windows installer
-- **Portable Executable** (`.exe`) - Standalone executable that doesn't require installation
-- **MSI Package** (if configured) - Windows Installer package
+You can even manually edit the version in `package.json`, commit, and push - the workflow will detect the change and create a release automatically!
 
-## Build Configuration
+## What Gets Built Automatically
 
-The build configuration is in `package.json` under the `build` section:
+When a version change is detected, GitHub Actions will:
+- **Build** the Windows executable
+- **Create a git tag** (e.g., `v1.0.1`)
+- **Create a GitHub release** with:
+  - NSIS Installer (`.exe`) - Standard Windows installer
+  - Portable Executable (`.exe`) - Standalone executable
+  - Auto-generated release notes
 
-```json
-{
-  "build": {
-    "appId": "cdc.starterkit.electron",
-    "productName": "CDC Electron Starterkit",
-    "win": {
-      "target": [
-        {
-          "target": "nsis",
-          "arch": ["x64"]
-        },
-        {
-          "target": "portable", 
-          "arch": ["x64"]
-        }
-      ]
-    }
-  }
-}
+## Workflow Jobs
+
+The new workflow includes these jobs:
+
+1. **check-version**: Detects if version in `package.json` changed
+2. **build**: Builds the app and uploads artifacts (always runs)
+3. **create-tag-and-release**: Creates tag and GitHub release (only if version changed)
+4. **build-only**: Test build without release (only if version unchanged)
+
+## Example Workflow
+
+```bash
+# Current version is 1.0.0
+npm run release:patch
+
+# This will:
+# 1. Change package.json version to 1.0.1
+# 2. Commit the change
+# 3. Push to GitHub
+# 4. GitHub Actions detects version change
+# 5. Builds Windows executable
+# 6. Creates tag v1.0.1
+# 7. Creates GitHub release with executables
 ```
 
-## GitHub Actions Workflow
+## Monitoring Releases
 
-The workflow file is located at `.github/workflows/build-and-release.yml` and includes:
+- Check the **Actions** tab to see the build progress
+- Check the **Releases** section to see published releases
+- Each release will include download links for Windows executables
 
-- **Build job**: Runs on Windows, builds the app, uploads artifacts
-- **Release job**: Creates GitHub release with built executables (only on tag push)
-- **Build-on-push job**: Tests builds on every push without releasing
+## Benefits of This Approach
 
-## Requirements
-
-- Repository must have GitHub Actions enabled
-- The `GITHUB_TOKEN` is automatically provided by GitHub Actions
-- Repository must match the one configured in `package.json` (`codesign-cloud/cdc-electron-starterkit`)
+✅ **Fully Automated**: Just bump version and push  
+✅ **No Manual Tagging**: Tags are created automatically  
+✅ **Version Control**: Only creates releases when version actually changes  
+✅ **Consistent**: Same process every time  
+✅ **Safe**: Still builds and tests on every push  
 
 ## Troubleshooting
 
-If builds fail:
-1. Check the GitHub Actions logs in the "Actions" tab of your repository
-2. Ensure all dependencies are properly listed in `package.json`
-3. Test the build locally with `npm run build`
-4. Make sure the repository name in `package.json` matches your actual repository
+If releases aren't being created:
+1. Ensure the version in `package.json` actually changed
+2. Check the Actions tab for any workflow errors
+3. Verify you have push permissions to the repository
+4. Make sure the workflow file is in the correct location
 
 ## Local Testing
 
-To test the build process locally:
+To test builds locally without releasing:
 
 ```bash
-# Install dependencies
 npm ci
-
-# Build renderer
 npm run build:renderer
-
-# Build for Windows (requires Windows or cross-compilation setup)
 npm run build
