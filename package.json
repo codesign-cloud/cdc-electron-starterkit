@@ -1,6 +1,6 @@
 {
   "name": "cdc-electron-starterkit",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Electron app starter kit",
   "author": {
     "name": "thinkdj",
@@ -24,6 +24,18 @@
     "dmg": {
       "icon": false
     },
+    "win": {
+      "target": [
+        {
+          "target": "nsis",
+          "arch": ["x64"]
+        },
+        {
+          "target": "portable",
+          "arch": ["x64"]
+        }
+      ]
+    },
     "linux": {
       "target": [
         "AppImage"
@@ -46,7 +58,10 @@
     "test": "jest",
     "test:watch": "jest --watch",
     "lint": "echo 'Linting not configured yet'",
-    "clean": "rimraf dist"
+    "clean": "rimraf dist",
+    "release:patch": "node scripts/create-release.js patch",
+    "release:minor": "node scripts/create-release.js minor",
+    "release:major": "node scripts/create-release.js major"
   },
   "license": "CC0-1.0",
   "devDependencies": {
