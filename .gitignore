@@ -8,6 +8,10 @@
 /dist
 /builds
 
+# bundle files (should not be committed)
+src/renderer.bundle.js*
+renderer.bundle.js*
+
 # editors etc
 /.git
 /.idea

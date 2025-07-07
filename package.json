@@ -9,6 +9,19 @@
   },
   "build": {
     "appId": "cdc.starterkit.electron",
+    "files": [
+      "src/**/*",
+      "dist/**/*",
+      "!src/__tests__/**/*",
+      "!src/renderer.bundle.js*",
+      "node_modules/**/*"
+    ],
+    "extraResources": [
+      {
+        "from": "dist/renderer.bundle.js",
+        "to": "app/dist/renderer.bundle.js"
+      }
+    ],
     "publish": [
       {
         "provider": "github",
